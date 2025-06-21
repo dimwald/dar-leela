@@ -1,85 +1,101 @@
-import React from "react";
-import Gradient from "@/assets/Icons/Gradient";
-import DocumentData from "@/assets/Icons/DocumentData";
-import LightBulbPerson from "@/assets/Icons/LightbulbPerson";
-import Rocket from "@/assets/Icons/Rocket";
-import Logo from "@/assets/Icons/Logo";
+import React, { useState, useEffect } from "react";
 import { Box } from "@/components/ui/box";
-import { ScrollView } from "react-native";
 import { Text } from "@/components/ui/text";
+import { Button } from "@/components/ui/button";
+import { router } from "expo-router";
 
-import { Link } from "expo-router";
+const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onComplete();
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
-const FeatureCard = ({ iconSvg: IconSvg, name, desc }: any) => {
   return (
-    <Box
-      className="flex-column border border-w-1 border-outline-700 md:flex-1 m-2 p-4 rounded"
-      key={name}
-    >
-      <Box className="items-center flex flex-row">
-        <Text>
-          <IconSvg />
+    <Box className="flex-1 bg-slate-900 items-center justify-center">
+      <Text className="text-white text-4xl font-light tracking-wide">
+        breathwrk
+      </Text>
+    </Box>
+  );
+};
+
+const OnboardingScreen = () => {
+  return (
+    <Box className="flex-1 bg-slate-900">
+      <Box className="flex-1 items-center justify-center px-8">
+        <Text className="text-white text-4xl font-light tracking-wide mb-16">
+          breathwrk
         </Text>
-        <Text className="text-typography-white font-medium ml-2 text-xl">
-          {name}
-        </Text>
+
+        {/* Breathing wave animation placeholder */}
+        <Box className="w-32 h-32 rounded-full border-2 border-white/30 mb-16 items-center justify-center">
+          <Box className="w-24 h-24 rounded-full border border-white/20" />
+        </Box>
+
+        <Box className="items-center mb-12">
+          <Text className="text-white text-3xl font-bold mb-2">
+            Stress <Text className="italic font-light">Less</Text>
+          </Text>
+          <Text className="text-white text-3xl font-bold mb-2">
+            <Text className="italic font-light">Sleep</Text> Better
+          </Text>
+          <Text className="text-white text-3xl font-bold mb-2">
+            Increase <Text className="italic font-light">Energy</Text>
+          </Text>
+          <Text className="text-white text-3xl font-bold">
+            <Text className="italic font-light">Feel</Text> Amazing
+          </Text>
+        </Box>
+
+        {/* Statistics */}
+        <Box className="flex-row justify-between w-full mb-12 px-4">
+          <Box className="items-center">
+            <Text className="text-white text-2xl font-bold">1 Billion</Text>
+            <Text className="text-white/70 text-sm">breaths taken</Text>
+          </Box>
+          <Box className="items-center">
+            <Text className="text-white text-lg font-bold">⭐⭐⭐⭐⭐</Text>
+            <Text className="text-white/70 text-sm">App Of The Day</Text>
+          </Box>
+          <Box className="items-center">
+            <Text className="text-white text-2xl font-bold">4 Million</Text>
+            <Text className="text-white/70 text-sm">users worldwide</Text>
+          </Box>
+        </Box>
+
+        {/* Buttons */}
+        <Box className="w-full px-4">
+          <Box className="bg-white rounded-full py-4 mb-4">
+            <Button
+              className="bg-transparent"
+              onPress={() => router.push("/tabs")}
+            >
+              <Text className="text-slate-900 text-lg font-semibold">
+                Get Started
+              </Text>
+            </Button>
+          </Box>
+
+          <Box className="flex-row items-center justify-center">
+            <Text className="text-white/70">Have an account? </Text>
+            <Button className="bg-transparent p-0">
+              <Text className="text-white font-semibold">Login</Text>
+            </Button>
+          </Box>
+        </Box>
       </Box>
-      <Text className="text-typography-400 mt-2">{desc}</Text>
     </Box>
   );
 };
 
 export default function Home() {
-  return (
-    <Box className="flex-1 bg-black h-[100vh]">
-      <ScrollView
-        style={{ height: "100%" }}
-        contentContainerStyle={{ flexGrow: 1 }}
-      >
-        <Box className="absolute h-[500px] w-[500px] lg:w-[700px] lg:h-[700px]">
-          <Gradient />
-        </Box>
-        <Box className="flex flex-1 items-center my-16 mx-5 lg:my-24 lg:mx-32">
-          <Box className="gap-10 base:flex-col sm:flex-row justify-between sm:w-[80%] md:flex-1">
-            <Box className="bg-background-template py-2 px-6 rounded-full items-center flex-column md:flex-row md:self-start">
-              <Text className="text-typography-white font-normal">
-                Get started by editing
-              </Text>
-              <Text className="text-typography-white font-medium ml-2">
-                ./App.tsx
-              </Text>
-            </Box>
-            <Link href="/tabs/">
-              <Box className="bg-background-template py-2 px-6 rounded-full items-center flex-column sm:flex-row md:self-start">
-                <Text className="text-typography-white font-normal">
-                  Explore Tab Navigation
-                </Text>
-              </Box>
-            </Link>
-          </Box>
-          <Box className="flex-1 justify-center items-center h-[20px] w-[300px] lg:h-[160px] lg:w-[400px]">
-            <Logo />
-          </Box>
+  const [showSplash, setShowSplash] = useState(true);
 
-          <Box className="flex-column md:flex-row">
-            <FeatureCard
-              iconSvg={DocumentData}
-              name="Docs"
-              desc="Find in-depth information about gluestack features and API."
-            />
-            <FeatureCard
-              iconSvg={LightBulbPerson}
-              name="Learn"
-              desc="Learn about gluestack in an interactive course with quizzes!"
-            />
-            <FeatureCard
-              iconSvg={Rocket}
-              name="Deploy"
-              desc="Instantly drop your gluestack site to a shareable URL with vercel."
-            />
-          </Box>
-        </Box>
-      </ScrollView>
-    </Box>
-  );
+  if (showSplash) {
+    return <SplashScreen onComplete={() => setShowSplash(false)} />;
+  }
+
+  return <OnboardingScreen />;
 }

@@ -7,7 +7,7 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
 }) {
-  return <FontAwesome size={18} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome size={20} style={{ marginBottom: -3 }} {...props} />;
 }
 
 export default function TabLayout() {
@@ -17,28 +17,38 @@ export default function TabLayout() {
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation v6.
         headerShown: useClientOnlyValue(false, true),
+        tabBarStyle: {
+          backgroundColor: "#1e293b", // slate-800
+          borderTopColor: "#475569", // slate-600
+          borderTopWidth: 1,
+        },
+        tabBarActiveTintColor: "#ffffff",
+        tabBarInactiveTintColor: "#94a3b8", // slate-400
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Expo V3",
+          title: "Affirmation",
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          headerStyle: {
+            backgroundColor: "#1e293b",
+          },
+          headerTintColor: "#ffffff",
         }}
       />
 
       <Tabs.Screen
-        name="tab1"
+        name="designations"
         options={{
-          title: "Tab 1",
-          tabBarIcon: ({ color }) => <TabBarIcon name="star-o" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="tab2"
-        options={{
-          title: "Tab 2",
-          tabBarIcon: ({ color }) => <TabBarIcon name="star-o" color={color} />,
+          title: "Designations",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="calendar" color={color} />
+          ),
+          headerStyle: {
+            backgroundColor: "#1e293b",
+          },
+          headerTintColor: "#ffffff",
         }}
       />
     </Tabs>
